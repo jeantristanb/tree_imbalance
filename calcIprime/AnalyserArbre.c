@@ -236,8 +236,8 @@ int main(void){
 int main(int argc, char** argv){
  Fichier* fichier;
   Tab_String* tab;
-  //char* MSGErreur = " Command line : exe -f tree \n\t[-p simulation number to compute pvalue for I prime statistics, default : 1000] number \n\t[ -s output default : stdout)] \n\t[ -l limits of node number in tree to computed values default : none]  \n\t[ -shao  ] \n\t [-b : binary tree B : Yes, N : No default B]";
-  char* MSGErreur = " Command line : exe [ -f files contains tree in xx format] \n\t[-p simulation number to compute pvalue for I prime statistics, default : 1000] number \n\t[ -s output default : stdout)] \n\t[ -l limits of node number in tree to computed values default : none]  \n\t[ -shao  : computed shao statistics] \n\t [-mf minimum of leaf of tree to analyse] \n exit ";
+  //char* MSGErreur = " Command line : exe -f tree \noption :\n\t[-p simulation number to compute pvalue for I prime statistics, default : 1000] number \n\t[ -s output default : stdout)] \n\t[ -l limits of node number in tree to computed values default : none]  \n\t[ -shao  ] \n\t [-b : binary tree B : Yes, N : No default B]";
+  char* MSGErreur = " Command line : exe  -f files contains tree in nexus format\noption: \n\t[-p simulation number to compute pvalue for I prime statistics, default : 1000] number \n\t[ -s output default : stdout)] \n\t[ -l limits of node number in tree to computed values default : none]  \n\t[ -shao  : computed shao statistics] \n\t [-mf minimum of leaf of tree to analyse] \n exit ";
   char* argTemp, *FileTmp;
   init_aleatoire();
   FILE* sortie=NULL, *SortieRapport=stderr;
