@@ -1,0 +1,20 @@
+le logiciel permet de calculer le déséquilibre sur les arbres. 
+Pour compiler : faire « make clean « puis make
+la commande est message : exe [tree] -p [nbPvalue] -s [sortie (opt==> stdou)] -l limite
+  * tree : le fichier d'entrée contient les arbres sous format nexus binaire et contenant juste les noms des feuilles et les distances des branches (pas de valeurs de bootstrap, ni de lignées intermédiaires) exemple ((a:1,b:1):1, c:2);
+    * -p le nombre de simulation aléatoire pour calculer la PValue
+	* -s : ==> optionnel sortie pour les statistiques des arbres sinon sortie stdout
+	* -l : optionnel, permet de calculer le déséquilibre en ne considérant que des nœuds à une certaine hauteur
+Sortie sous format de colonne contenant ligne par ligne le 
+  * Num : numéro de la ligne
+  * LongeurTotal : longueur total de l'arbre
+  * LongeurExterne : longueur des branches externes
+  * LongeurInterne : longueur des branches internes 
+  * Echantillon	: Nombre d'échantillons ou feuilles de l'arbre
+  * TMRCA : hauteur de l'arbre (moyenne des hauteurs entre chaque feuille et le nœud le plus haut)
+  * nbNoeudNonNUll : Nombre de nœud non nul (un nœud est considéré nul, si sa valeur est inférieur à 10 000 fois le TMRCA
+  * IprimeBin,NbNoeudIprimeBin,	PVIpPurBin : Iprime, nombre de nœuds utilisé et p-value calculés selon la définition initiale du Iprime que sur les nœuds binaire	
+  * IprimeNonBin2N	NbNoeudIprimeNonBin2N	PVIpPurNonBin2N	: I, nombre de nœuds utilisé et p-value calculés selon ma définition mais en ne considérant que les nœuds qui ont au moins 2*k polytomie -1
+  * IprimeNonBinKp1	NbNoeudIprimeNonBinKp1	PVIpPurNonBinKp1 : 	I, nombre de nœuds utilisé et p-value calculés selon ma définition cf. article
+  * Autre définition en utilisant les polytomies par permutation : IprimeNonBinPerm	NbNoeudIprimeNonBinPerm	PVIpPurNonBinPerm	IprimePurvis	NbNoeudIprimePurvis	PVIpPurPurvis	IprimePurvisPerm	NbNoeudIprimePurvisPerm	PVIpPurPurvisPerm	
+  * nbRepPvalue : nombre de répétition de la P-Value
