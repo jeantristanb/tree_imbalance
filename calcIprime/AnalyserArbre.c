@@ -236,8 +236,9 @@ int main(void){
 int main(int argc, char** argv){
  Fichier* fichier;
   Tab_String* tab;
-  char* MSGErreur = " Ligne de commande : exe [tree] -p [nbPvalue] -s [sortie (opt==> stdout)] -l limite";
-  char* argTemp;
+  //char* MSGErreur = " Command line : exe -f tree \n\t[-p simulation number to compute pvalue for I prime statistics, default : 1000] number \n\t[ -s output default : stdout)] \n\t[ -l limits of node number in tree to computed values default : none]  \n\t[ -shao  ] \n\t [-b : binary tree B : Yes, N : No default B]";
+  char* MSGErreur = " Command line : exe [ -f files contains tree in xx format] \n\t[-p simulation number to compute pvalue for I prime statistics, default : 1000] number \n\t[ -s output default : stdout)] \n\t[ -l limits of node number in tree to computed values default : none]  \n\t[ -shao  : computed shao statistics] \n\t [-mf minimum of leaf of tree to analyse] \n exit ";
+  char* argTemp, *FileTmp;
   init_aleatoire();
   FILE* sortie=NULL, *SortieRapport=stderr;
   int nbRepPvalueIprime = 10;
@@ -266,38 +267,48 @@ int main(int argc, char** argv){
   /*Recuperation des arguments*/
   /*Pvalue*/
   argTemp=GetArgument(argc,argv, "-p");
-  if(argTemp==NULL)erreur(MSGErreur); 
+  if(argTemp==NULL) nbRepPvalueIprime = 1000;
   else nbRepPvalueIprime = atoi(argTemp);
+  fprintf(SortieRapport,"repetition number for simulate Iprime: %d\n", nbRepPvalueIprime);
   /*-s*/
   argTemp=GetArgument(argc,argv, "-s");
   if(argTemp==NULL){
-                     fprintf(SortieRapport,"Nomfichier sortie : stdout" ); 
+                     fprintf(SortieRapport,"Nomfichier sortie : stdout\n" ); 
                      sortie=stdout;
-  }
-  else{
-       fprintf(SortieRapport,"Nomfichier sortie : %s\n", argTemp );
+  }else{
+       fprintf(SortieRapport,"output file : %s\n", argTemp );
        sortie = fopen(argTemp, "w");
   }
   
   if(verifArgument(argc,argv, "-shao")){
            Global_CalcShao = TRUE;                  
   }
-  /*Pour le nombre maximum de feuille a analyser*/
-  argTemp=GetArgument(argc,argv, "-mf");
-  
-  /*Pour la limite*/
+
   argLim=GetArgument(argc,argv, "-l");
   if(argLim!=NULL)LimiteHauteur=atof(argLim);
   else LimiteHauteur = -1;
   
+  /*Pour le nombre maximum de feuille a analyser*/
+  
+  /*Pour la limite*/
+
+  argTemp=GetArgument(argc,argv, "-mf");
   if(argTemp==NULL){
-                     MinFeuille = 0;
+    MinFeuille = 0;
+  }else{
+    MinFeuille = atoi(argTemp);
   }
-  MinFeuille = atoi(argTemp);
-  fichier = Fichier_Create(String_Create(argv[1]), 'w');
+  /*fichier = Fichier_Create(String_Create(argv[1]), 'w');*/
+  FileTmp=GetArgument(argc,argv, "-f"); 
+  if(FileTmp==NULL){
+	 fprintf(stderr,"%s",MSGErreur);
+         erreur("file with tree not found  see -f option" );                                                                            
+  }
+
+  fichier = Fichier_Create(String_Create(FileTmp), 'w'); 
   tab = fichier->Lire_Ligne(fichier);
   #ifndef IMFV2
-   argTemp=GetArgument(argc,argv, "-b");
+  argTemp=GetArgument(argc,argv, "-b");
   if(argTemp!=NULL){
                     if(strcmp(argTemp,"B")==0)  Binaire    = TRUE; 
                     else  if(strcmp(argTemp,"N")==0)  Binaire    = FALSE; 
@@ -312,9 +323,6 @@ int main(int argc, char** argv){
   #else                  
   /*-b*/
 
-
-  
-  
   AnalyserArbres(sortie, tab, nbRepPvalueIprime, Binaire);
   #endif
   tab->Free(tab);
