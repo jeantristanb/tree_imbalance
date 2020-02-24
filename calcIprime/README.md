@@ -15,7 +15,7 @@ make
 ## what do
 computed imbalance in phylogenetics tree using different estimators
 ## option 
-* `-f` : files contains one or more tree in nexus format binaary : no bootstrap value or politonie : ((a:1,b:1):1, c:2);
+* `-f` : files contains one or more tree in newick format binary : no bootstrap value or politonie : ((a:1,b:1):1, c:2);
 * optional : 
  * `-p` simulation number to compute pvalue for I prime statistics, default : 1000
  * `-s` output [default : stdout] 
