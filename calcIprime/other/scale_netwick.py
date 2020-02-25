@@ -2,7 +2,7 @@ import re
 import sys
 
 
-def reformat_newick(FileNewick,FileNewickOut ,tmrca):
+def scale_newick(FileNewick,FileNewickOut ,tmrca):
     Read = open(FileNewick, 'r')
     tree= Read.Readlines()
     Read.close

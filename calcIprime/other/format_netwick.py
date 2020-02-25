@@ -21,10 +21,12 @@ def parse(newick):
 
 def print_newick(newick, Cmt=0, length=0):
   if len(newick['children'])==0:
-      return newick['name']+":"+str(length+length)
+      return newick['name']+":"+str(newick['length']+length)
   if len(newick['children'])==1:
       if newick['length']==None:
          lng=0
+      else : 
+          lng=newick['length']
       return print_newick(newick['children'][0],Cmt+1, lng)
 
   strout='('
