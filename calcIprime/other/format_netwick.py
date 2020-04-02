@@ -57,13 +57,22 @@ if Test :
   print(print_newick(AAA))
   sys.exit()
 
+def funcreplacetipbydot(x) :
+    return re.sub(r'(\d+)\,(\d+)',r"\1.\2", x)
+def funcnothing(x) :
+    return x
 FileIn=sys.argv[1]
 FileOut=sys.argv[2]
+funcform=funcnothing
+if len(sys.argv)==4 and sys.argv[3][0]=='T':
+    print('replace , by . for numerics')
+    funcform=funcreplacetipbydot
+
 ReadIn=open(FileIn)
 Writ=open(FileOut, 'w')
 ListVec=ReadIn.readlines()
 for lines in ListVec :
     Cmt=0
-    treeform=parse(lines.replace('\n', ''))
+    treeform=parse(funcform(lines.replace('\n', '')))
     treeformnet=print_newick(treeform)+';'+'\n'
     Writ.write(treeformnet)
